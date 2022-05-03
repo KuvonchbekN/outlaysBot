@@ -1,7 +1,7 @@
 package by.kuvonchbekn.outlaysbot.entity;
 
 public enum RoleType {
-    SIMPLE_USER,
-    ADMIN,
-    OWNER
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_OWNER
 }
