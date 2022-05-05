@@ -1,4 +1,4 @@
-package by.kuvonchbekn.outlaysbot.security;
+package by.kuvonchbekn.outlaysbot.config;
 
 import by.kuvonchbekn.outlaysbot.entity.User;
 import org.springframework.data.domain.AuditorAware;

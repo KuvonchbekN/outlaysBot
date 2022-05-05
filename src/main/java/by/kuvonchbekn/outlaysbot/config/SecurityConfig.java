@@ -1,4 +1,4 @@
-package by.kuvonchbekn.outlaysbot.security;
+package by.kuvonchbekn.outlaysbot.config;
 
 import by.kuvonchbekn.outlaysbot.filter.JwtFilter;
 import by.kuvonchbekn.outlaysbot.service.AuthService;
