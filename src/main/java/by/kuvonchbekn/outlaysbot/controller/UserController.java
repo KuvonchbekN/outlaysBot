@@ -22,6 +22,10 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserList());
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<?>getUserByUsername(@PathVariable String username){
+        return ResponseEntity.ok().body(userService.getUserByUsername(username));
+    }
 
     @PreAuthorize("hasRole('ROLE_OWNER')")
     @PostMapping("/add_role")
