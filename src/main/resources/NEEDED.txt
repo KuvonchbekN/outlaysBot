@@ -1,3 +1,5 @@
 need to implement fully restfull
 
 need to add the swagger
+
+need to implement good README.md file using some tutorials on youtube
