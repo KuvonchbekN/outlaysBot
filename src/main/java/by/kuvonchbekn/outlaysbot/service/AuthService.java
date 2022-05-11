@@ -10,6 +10,7 @@ import by.kuvonchbekn.outlaysbot.filter.JwtHandler;
 import by.kuvonchbekn.outlaysbot.repo.RoleRepo;
 import by.kuvonchbekn.outlaysbot.repo.UserRepo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,7 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
-import java.util.Collections;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -34,13 +35,15 @@ public class AuthService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final JwtHandler jwtHandler;
     private final PasswordEncoder passwordEncoder;
+    private final MessageSource messageSource;
 
-    public AuthService(UserRepo userRepo, RoleRepo roleRepo, @Lazy AuthenticationManager authenticationManager, JwtHandler jwtHandler, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepo userRepo, RoleRepo roleRepo, @Lazy AuthenticationManager authenticationManager, JwtHandler jwtHandler, PasswordEncoder passwordEncoder, MessageSource messageSource) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
         this.authenticationManager = authenticationManager;
         this.jwtHandler = jwtHandler;
         this.passwordEncoder = passwordEncoder;
+        this.messageSource = messageSource;
     }
 
     public ApiResponse registerUser(RegisterDto registerDto) throws RoleNotFoundException {
@@ -60,7 +63,7 @@ public class AuthService implements UserDetailsService {
 
 
         userRepo.save(user);
-        return new ApiResponse("Saved successfully", true);
+        return new ApiResponse(messageSource.getMessage("api.response.user.creation.successful", null, Locale.ENGLISH), true);
     }
 
     public ApiResponse login(LoginDto loginDto){

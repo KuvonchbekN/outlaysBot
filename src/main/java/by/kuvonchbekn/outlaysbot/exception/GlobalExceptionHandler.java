@@ -1,8 +1,6 @@
 package by.kuvonchbekn.outlaysbot.exception;
 
-import by.kuvonchbekn.outlaysbot.exception.specificExceptions.ProductNotFoundException;
-import by.kuvonchbekn.outlaysbot.exception.specificExceptions.RoleNotFoundException;
-import by.kuvonchbekn.outlaysbot.exception.specificExceptions.UserNotFoundException;
+import by.kuvonchbekn.outlaysbot.exception.specificExceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,28 +40,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.unprocessableEntity().body(errorResponse);
     }
 
-
-    //username is not found exception thrown
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException userNotFoundException, WebRequest request) {
-        log.error("Failed to find the requested user", userNotFoundException);
-        return buildErrorResponse(userNotFoundException, HttpStatus.NOT_FOUND, request);
-    }
-
-    @ExceptionHandler(ProductNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException productNotFoundException, WebRequest request){
-        return buildErrorResponse(productNotFoundException, HttpStatus.NOT_FOUND, request);
-    }
-
-    //Role not found
-    @ExceptionHandler(RoleNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> handleRoleNotFoundException(RoleNotFoundException roleNotFoundException, WebRequest request) {
-        log.error("Failed to find the requested role", roleNotFoundException);
-        return buildErrorResponse(roleNotFoundException, HttpStatus.NOT_FOUND, request);
-    }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)//if the type of exception is not known
@@ -105,5 +81,54 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request) {
 
         return buildErrorResponse(ex, status, request);
+    }
+
+
+    //username is not found exception thrown
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException userNotFoundException, WebRequest request) {
+        log.error("Failed to find the requested user", userNotFoundException);
+        return buildErrorResponse(userNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException productNotFoundException, WebRequest request) {
+        return buildErrorResponse(productNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+
+    //Role not found
+    @ExceptionHandler(RoleNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleRoleNotFoundException(RoleNotFoundException roleNotFoundException, WebRequest request) {
+        log.error("Failed to find the requested role", roleNotFoundException);
+        return buildErrorResponse(roleNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(ProductAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<Object> handleProductAlreadyExistsException(ProductAlreadyExistsException productAlreadyExistsException, WebRequest request){
+        log.error("Already exists exception", productAlreadyExistsException);
+        return buildErrorResponse(productAlreadyExistsException, HttpStatus.CONFLICT,request);
+    }
+
+    @ExceptionHandler(GroupNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleGroupNotFoundException(GroupNotFoundException groupNotFoundException, WebRequest request){
+        return buildErrorResponse(groupNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(AlreadyGroupAdmin.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<Object> handleAlreadyGroupAdminFoundException(AlreadyGroupAdmin alreadyGroupAdmin, WebRequest request){
+        return buildErrorResponse(alreadyGroupAdmin, HttpStatus.CONFLICT, request);
+    }
+
+
+    @ExceptionHandler(PaymentNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handlePaymentNotFoundException(PaymentNotFoundException paymentNotFoundException, WebRequest request) {
+        return buildErrorResponse(paymentNotFoundException, HttpStatus.NOT_FOUND, request);
     }
 }

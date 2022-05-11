@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    void deleteProduct(String productId);
-    void saveProduct(Product product);
+    boolean deleteProduct(String productId);
+    Product saveProduct(Product product);
     Product getProduct(String productId);
     List<Product> getAllProductsList();
 
-    void updateProduct(String productId, ProductDto productDto);
+    Product updateProduct(String productId, ProductDto productDto);
 }
 
 /*

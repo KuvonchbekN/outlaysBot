@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,6 +31,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepo userRepo;
     private final RoleRepo roleRepo;
     private final MessageSource messageSource;
+
+    @Override
+    public User getUserById(String userId) {
+        return userRepo.findById(userId).orElseThrow(()-> new UserNotFoundException(messageSource.getMessage("api.error.user.not.found", null, Locale.ENGLISH)));
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -99,6 +105,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return new ApiResponse("User", true, savedUser);
         }
     }
-
-
 }

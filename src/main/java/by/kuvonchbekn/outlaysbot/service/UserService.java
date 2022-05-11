@@ -12,4 +12,6 @@ public interface UserService {
     User getUserByUsername(String username);
     void saveUser(User user);
     ApiResponse addRoleToUser(String username, String roleName) throws RoleNotFoundException;
+
+    User getUserById(String userId);
 }

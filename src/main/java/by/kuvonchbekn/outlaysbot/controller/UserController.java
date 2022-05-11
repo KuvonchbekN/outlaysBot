@@ -2,6 +2,7 @@ package by.kuvonchbekn.outlaysbot.controller;
 
 import by.kuvonchbekn.outlaysbot.dto.ApiResponse;
 import by.kuvonchbekn.outlaysbot.dto.RoleToUserForm;
+import by.kuvonchbekn.outlaysbot.entity.User;
 import by.kuvonchbekn.outlaysbot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getUserList(){
         return ResponseEntity.ok().body(userService.getUserList());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable String id){
+        User userById = userService.getUserById(id);
+        return ResponseEntity.ok(userById);
     }
 
     @GetMapping("/{username}")
